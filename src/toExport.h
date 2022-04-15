@@ -27,11 +27,18 @@ int runtime(std::string stat_name,
             double thresh
 );
 
-// [[Rcpp::export]]
-double get_sHalf(std::string const& stat_name, double const& thresh);
+// // [[Rcpp::export]]
+// double get_sHalf(std::string const& stat_name, double const& thresh);
+
+// // [[Rcpp::export]]
+// void test_update(std::string const& stat_name, 
+//              double const& thresh, 
+//              std::deque<double>& data
+// );
+
 
 // [[Rcpp::export]]
-void test_update(std::string const& stat_name, 
-             double const& thresh, 
-             std::deque<double>& data
-);
+void test_OHA_constr2 (std::deque<double> &v, double const& alpha);
+
+
+

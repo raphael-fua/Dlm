@@ -27,7 +27,7 @@ deque<double> Cpd::stat() const {
                     double (idx[len - 1]) / double (idx[i] * (idx[len - 1] - idx[i]))
                 ) * abs(double (idx[i]) / double (idx[len - 1]) * sums[len -1] - sums[i]);
         }
-    } else {
+    }  else {
         cerr << "invalid stat_name" << endl;
     }
 
@@ -67,14 +67,6 @@ void Cpd::print() const {
    cout << "*t: " << t << endl;
    cout << "*cp: " << cp << endl;
 }
-
-
-
-
-
-
-
-
 
 void Cpd::update(const deque<double> &v) {
     for(int i = 0; i < v.size(); i++) {

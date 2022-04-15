@@ -17,13 +17,17 @@ setwd(topDir)
 install(pkg_name)
 
 # Testing #####
+
+cat("\n~~~out of danger zone~~~\n")
 library(Dlm)
-print(get_sHalf("cusum", 5.5))
-a <- "cusum"
-b <- 5.5
-c <- 1:10
-test_update(a, b, c)   
+# print(get_sHalf("cusum", 5.5))
+# a <- "cusum"
+# b <- 5.5
+# c <- 1:10
+# test_update(a, b, c)   
+# 
+# cumsum(1:10)
+# 
+# 21/6+4
 
-cumsum(1:10)
-
-21/6+4
+test_OHA_constr2(1:10, .05)

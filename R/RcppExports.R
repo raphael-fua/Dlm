@@ -25,11 +25,7 @@ runtime <- function(stat_name, data, thresh) {
     .Call(`_Dlm_runtime`, stat_name, data, thresh)
 }
 
-get_sHalf <- function(stat_name, thresh) {
-    .Call(`_Dlm_get_sHalf`, stat_name, thresh)
-}
-
-test_update <- function(stat_name, thresh, data) {
-    invisible(.Call(`_Dlm_test_update`, stat_name, thresh, data))
+test_OHA_constr2 <- function(v, alpha) {
+    invisible(.Call(`_Dlm_test_OHA_constr2`, v, alpha))
 }
 

@@ -78,27 +78,14 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// get_sHalf
-double get_sHalf(std::string const& stat_name, double const& thresh);
-RcppExport SEXP _Dlm_get_sHalf(SEXP stat_nameSEXP, SEXP threshSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::string const& >::type stat_name(stat_nameSEXP);
-    Rcpp::traits::input_parameter< double const& >::type thresh(threshSEXP);
-    rcpp_result_gen = Rcpp::wrap(get_sHalf(stat_name, thresh));
-    return rcpp_result_gen;
-END_RCPP
-}
-// test_update
-void test_update(std::string const& stat_name, double const& thresh, std::deque<double>& data);
-RcppExport SEXP _Dlm_test_update(SEXP stat_nameSEXP, SEXP threshSEXP, SEXP dataSEXP) {
+// test_OHA_constr2
+void test_OHA_constr2(std::deque<double>& v, double const& alpha);
+RcppExport SEXP _Dlm_test_OHA_constr2(SEXP vSEXP, SEXP alphaSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::string const& >::type stat_name(stat_nameSEXP);
-    Rcpp::traits::input_parameter< double const& >::type thresh(threshSEXP);
-    Rcpp::traits::input_parameter< std::deque<double>& >::type data(dataSEXP);
-    test_update(stat_name, thresh, data);
+    Rcpp::traits::input_parameter< std::deque<double>& >::type v(vSEXP);
+    Rcpp::traits::input_parameter< double const& >::type alpha(alphaSEXP);
+    test_OHA_constr2(v, alpha);
     return R_NilValue;
 END_RCPP
 }
@@ -110,8 +97,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Dlm_time_dlm", (DL_FUNC) &_Dlm_time_dlm, 1},
     {"_Dlm_scores", (DL_FUNC) &_Dlm_scores, 3},
     {"_Dlm_runtime", (DL_FUNC) &_Dlm_runtime, 3},
-    {"_Dlm_get_sHalf", (DL_FUNC) &_Dlm_get_sHalf, 2},
-    {"_Dlm_test_update", (DL_FUNC) &_Dlm_test_update, 3},
+    {"_Dlm_test_OHA_constr2", (DL_FUNC) &_Dlm_test_OHA_constr2, 2},
     {NULL, NULL, 0}
 };
 
