@@ -40,7 +40,8 @@ void OHA::update(const double &new_data) {
     if (idx[0] % 2 == 0) {
         sHalf += sums[0] / idx[0];
         double V = sqrt(idx[0]) * (sHalf / (idx[0] / 2) - sums[0] / idx[0]);
-        if(2 * pow(abs(V) - 1, 2) > thresh) {
+        
+        if((2 * pow(abs(V) - 1, 2) > thresh) and (t == -1)) {
             t = idx[0];
             cp = t / 2;
         }
