@@ -18,3 +18,12 @@ install(pkg_name)
 
 # Testing #####
 library(Dlm)
+print(get_sHalf("cusum", 5.5))
+a <- "cusum"
+b <- 5.5
+c <- 1:10
+test_update(a, b, c)   
+
+cumsum(1:10)
+
+21/6+4

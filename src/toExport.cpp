@@ -37,3 +37,26 @@ int runtime(std::string stat_name,
     Dlmh dlm(stat_name, data, thresh);
     return dlm.t;
 }
+
+double get_sHalf(std::string const& stat_name, double const& thresh) {
+    OHA oha(stat_name, thresh);
+    return oha.sHalf;
+}
+    
+void test_update(std::string const& stat_name, 
+                 double const& thresh, 
+                 std::deque<double>& data) {
+    std::cout << "hello" << std::endl;
+    OHA oha(stat_name, thresh);
+    std::cout << "cruel" << std::endl;
+    for (auto elt:data) {
+    std::cout << "world" << std::endl;
+        oha.update(elt);
+        std::cout << oha.sHalf << " ";
+    }
+    std::cout << std::endl;
+}
+    
+    
+    
+    

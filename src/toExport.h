@@ -1,6 +1,8 @@
 #pragma once
 #include "Dlmh.h"
+#include "OHA.h"
 #include <chrono>
+#include <string>
 //#include <vector>
 // [[Rcpp::plugins("cpp11")]]
 
@@ -23,4 +25,13 @@ std::deque<double> scores(std::string stat_name,
 int runtime(std::string stat_name, 
             std::deque<double> data, 
             double thresh
+);
+
+// [[Rcpp::export]]
+double get_sHalf(std::string const& stat_name, double const& thresh);
+
+// [[Rcpp::export]]
+void test_update(std::string const& stat_name, 
+             double const& thresh, 
+             std::deque<double>& data
 );
