@@ -59,20 +59,32 @@ for(k in seq_len(N/2)) {
     print(test_stat(k, 1, my_data))
 }
     
+cat("~ R bis ~\n")
+nu <- 100
+eta <- function(n, nu, alpha) {
+    return(n/(n+nu)*alpha)
+}
+
+falpha <- function(n, nu, alpha) {
+    return(eta(n, nu, alpha) - eta(n - 1, nu, alpha))
+}
+
+v <- c()
+for (n in 1:100) {
+    v <- c(v, falpha(n, nu, alpha))
+}
+
+plot(v)
+
+cat('R alpha', N/2, ':', falpha(N/2, nu, alpha), '\n')
+cat('corresponding r threshold', - 2 * log(falpha(N/2+1, nu, alpha)) - log(2 * pi), '\n') 
+
+
 cat("\n~ cpp ~\n")
-test_OHA_constr2(my_data, alpha)    
-    
-# no need for calibration for this one 
+cat('runtime (t):', runtimeOHA(my_data, alpha, nu), '\n')
+test_OHA_constr2(my_data, alpha, nu)    
+# No threshold calibration for OHA -> no need to integrate it into avg_run_len.R
 # next step is putting in in x:magnitude v y:dd plot
 
 
 
-
-
-
-
-
-
-
-
-# Future tests ####

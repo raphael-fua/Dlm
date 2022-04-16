@@ -1,20 +1,18 @@
 #include "OHA.h"
 using namespace std;
 
-//OHA::OHA(string const& stat_name, double const& thresh):
-//    Cpd(stat_name, deque<size_t> {0}, deque<double> {0.0}, thresh, -1, -1),
-//    sHalf (0)
-//{}
 
-OHA::OHA(deque<double> &v, double const& alpha):
+OHA::OHA(deque<double> &v, double const& alpha, double const& nu):
     Cpd("sOHA", 
         deque<size_t> {1},
         deque<double> {v[0]},
-        -2 * log(alpha) - log(2 * M_PI), 
+        -2 * log(alpha / (1 + nu)) - log(2 * M_PI), 
         -1, 
         -1
     ),
-    sHalf (0.0)
+    sHalf (0.0),
+    alpha (alpha),
+    nu (nu)
 {
     double tmp = v.front();
     v.pop_front();
@@ -45,6 +43,9 @@ void OHA::update(const double &new_data) {
             t = idx[0];
             cp = t / 2;
         }
+        
+        double n = idx[0] / 2;
+        thresh = -2 * log(alpha * ((n + 1) / (n + 1 + nu) - n / (n + nu))) - log(2 * M_PI);
     }
 }
 

@@ -5,10 +5,10 @@
 class OHA : public virtual Cpd {
 public:
     double sHalf;
-    
+    double alpha;
+    double nu;
 
-    //OHA(std::string const& stat_name, double const& thresh);
-    OHA(std::deque<double> &v, double const& alpha);
+    OHA(std::deque<double> &v, double const& alpha, double const& nu);
     void print() const;
     virtual void update(double const& new_data) override;
 };

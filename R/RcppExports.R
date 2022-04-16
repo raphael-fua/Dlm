@@ -25,7 +25,11 @@ runtime <- function(stat_name, data, thresh) {
     .Call(`_Dlm_runtime`, stat_name, data, thresh)
 }
 
-test_OHA_constr2 <- function(v, alpha) {
-    invisible(.Call(`_Dlm_test_OHA_constr2`, v, alpha))
+runtimeOHA <- function(data, alpha, nu) {
+    .Call(`_Dlm_runtimeOHA`, data, alpha, nu)
+}
+
+test_OHA_constr2 <- function(v, alpha, nu) {
+    invisible(.Call(`_Dlm_test_OHA_constr2`, v, alpha, nu))
 }
 

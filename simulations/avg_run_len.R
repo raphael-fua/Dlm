@@ -1,6 +1,8 @@
+
+
 source('helper_functions.r')
 
-N <- 2e6 # hopefully only thing that needs to be touched
+N <- 2e5 # hopefully only thing that needs to be touched
 
 SEED <- 45
 RNGkind("L'Ecuyer-CMRG")
@@ -81,6 +83,4 @@ plot(
 abline(v = thre)
 text(thre, 1, thre)
 invisible(dev.off())
-
-
 
