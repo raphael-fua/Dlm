@@ -48,7 +48,7 @@ void MHA::update(const double &new_data) {
                 cp = (pow(2, i) - 1) * k;
             }
         }
-        thresh = -2 * log(alpha * ((double(k) + 1) / (double(k) + 1 + nu) - double(k) / (double(k) + nu))) - log(2 * M_PI);
+        thresh = -2 * log(alpha * (double(k) / (double(k) + nu) - (double(k) - 1) / (double(k) - 1 + nu))) - log(2 * M_PI);
     }
     Rcpp::Rcout << "~new_data: " << new_data << endl;
     print();
