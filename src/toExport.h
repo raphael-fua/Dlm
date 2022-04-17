@@ -24,5 +24,13 @@ void test_OHA_constr2 (std::deque<double> &v, double const& alpha, double const&
 // [[Rcpp::export]]
 void test_MHA_constr2 (std::deque<double> &v, double const& alpha, double const& nu, int const& i);
 
-// // [[Rcpp::export]]
-//bool test_MHA_fpr(std::deque<double> &v, double const& alpha, double const& nu, int const& i);
+// [[Rcpp::export]]
+bool test_MHA_fpr (std::deque<double> &v, double const& alpha, double const& nu, int const& i);
+
+
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 # below, set to TRUE if modifications have been made to cpp package
 cat('\14')
-if(TRUE){
+if(T){
     # Making changes abailable by reloading the package ####
     topDir <- "~/Documents/University/ethz/semester_3/Thesis"
     pkg_name <- "Dlm"
@@ -20,6 +20,7 @@ if(TRUE){
     install(pkg_name)
 }
 
+if(F){
 # Testing 1: good (don't touch) ####
 
 library(Dlm)
@@ -65,16 +66,18 @@ for (n in 1:nu) {
 
 res <- -2 * log(valpha) - log(2 * pi)
 
-# test 2: test fp rate ####
+}
 
-# N <- 100
-# alpha <- .2
-# nu <- 100
-# i <- 2
-# set.seed(7)
-# my_data <- rnorm(N)
-# 
-# 
-# cat("\n~ cpp ~\n")
-# #cat('runtime (t):', runtimeOHA(my_data, alpha, nu, i), '\n')
-# test_MHA_constr2(my_data, alpha, nu, i)
+# test 2: test fp rate ####
+library(Dlm)
+nsim <- 10
+N <- 100
+alpha <- .2
+nu <- 100
+i <- 2
+set.seed(7)
+my_data <- rnorm(N)
+
+test_MHA_fpr(my_data, alpha, nu, i)
+
+# we expect a slightly smaller fpr than alpha since N != infinity

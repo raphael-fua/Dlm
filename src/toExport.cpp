@@ -36,7 +36,7 @@ void test_MHA_constr2 (std::deque<double> &v, double const& alpha, double const&
 }
 
 
-// void test_MHA_constr2 (std::deque<double> &v, double const& alpha, double const& nu, int const & i) {
-//     MHA mha(v, alpha, nu, i);
-//     //mha.print();
-// }
+bool test_MHA_fpr (std::deque<double> &v, double const& alpha, double const& nu, int const & i) {
+    MHA mha(v, alpha, nu, i);
+    return(mha.t == -1);
+}

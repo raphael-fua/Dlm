@@ -107,6 +107,20 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// test_MHA_fpr
+bool test_MHA_fpr(std::deque<double>& v, double const& alpha, double const& nu, int const& i);
+RcppExport SEXP _Dlm_test_MHA_fpr(SEXP vSEXP, SEXP alphaSEXP, SEXP nuSEXP, SEXP iSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::deque<double>& >::type v(vSEXP);
+    Rcpp::traits::input_parameter< double const& >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< double const& >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< int const& >::type i(iSEXP);
+    rcpp_result_gen = Rcpp::wrap(test_MHA_fpr(v, alpha, nu, i));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Dlm_isZero", (DL_FUNC) &_Dlm_isZero, 1},
@@ -117,6 +131,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Dlm_runtimeOHA", (DL_FUNC) &_Dlm_runtimeOHA, 3},
     {"_Dlm_test_OHA_constr2", (DL_FUNC) &_Dlm_test_OHA_constr2, 3},
     {"_Dlm_test_MHA_constr2", (DL_FUNC) &_Dlm_test_MHA_constr2, 4},
+    {"_Dlm_test_MHA_fpr", (DL_FUNC) &_Dlm_test_MHA_fpr, 4},
     {NULL, NULL, 0}
 };
 

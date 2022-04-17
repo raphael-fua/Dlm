@@ -33,3 +33,7 @@ test_MHA_constr2 <- function(v, alpha, nu, i) {
     invisible(.Call(`_Dlm_test_MHA_constr2`, v, alpha, nu, i))
 }
 
+test_MHA_fpr <- function(v, alpha, nu, i) {
+    .Call(`_Dlm_test_MHA_fpr`, v, alpha, nu, i)
+}
+
