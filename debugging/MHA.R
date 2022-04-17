@@ -41,13 +41,13 @@ test_MHA_constr2(my_data, alpha, nu, i)
 
 cat("\n~ R ~\n")
 ski <- function(k, i, my_data) {
-    pi <- 1 - 1 / 2^i
+    pii <- 1 - 1 / 2 ^ i
     
     res <- 0
     for(j in seq_len(k)) {
         res <- res + sum(my_data[1:(j * 2^i)]) / j
     }
-    res <- pi * res
+    res <- pii * res
     return(res)
 }
 k <- N / 2 ^ i
@@ -65,9 +65,16 @@ for (n in 1:nu) {
 
 res <- -2 * log(valpha) - log(2 * pi)
 
+# test 2: test fp rate ####
 
-
-
-
-
-
+# N <- 100
+# alpha <- .2
+# nu <- 100
+# i <- 2
+# set.seed(7)
+# my_data <- rnorm(N)
+# 
+# 
+# cat("\n~ cpp ~\n")
+# #cat('runtime (t):', runtimeOHA(my_data, alpha, nu, i), '\n')
+# test_MHA_constr2(my_data, alpha, nu, i)

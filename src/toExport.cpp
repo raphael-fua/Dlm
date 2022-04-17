@@ -32,5 +32,11 @@ void test_OHA_constr2 (std::deque<double> &v, double const& alpha, double const&
 // below: only makes sense if I call print in MHA::update(double)    
 void test_MHA_constr2 (std::deque<double> &v, double const& alpha, double const& nu, int const & i) {
     MHA mha(v, alpha, nu, i);
-    //mha.print();
+    mha.print();
 }
+
+
+// void test_MHA_constr2 (std::deque<double> &v, double const& alpha, double const& nu, int const & i) {
+//     MHA mha(v, alpha, nu, i);
+//     //mha.print();
+// }
