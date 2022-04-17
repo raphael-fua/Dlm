@@ -64,7 +64,6 @@ nu <- 100
 eta <- function(n, nu, alpha) {
     return(n/(n+nu)*alpha)
 }
-
 falpha <- function(n, nu, alpha) {
     return(eta(n, nu, alpha) - eta(n - 1, nu, alpha))
 }

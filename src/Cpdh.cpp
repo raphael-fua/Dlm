@@ -8,11 +8,11 @@ Cpdh::Cpdh(deque<double> const& maxs):
 
 void Cpdh::print() const {
     Cpd::print();
-    cout << "** maxs: ";
+    Rcpp::Rcout << "** maxs: ";
     for(auto const& elt : maxs) {
-        cout << elt << " ";
+        Rcpp::Rcout << elt << " ";
     }
-    cout << endl;
+    Rcpp::Rcout << endl;
 }
 
 void Cpdh::update_maxs() {

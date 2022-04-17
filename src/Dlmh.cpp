@@ -17,15 +17,15 @@ void Dlmh::print() const {
     Cpd::print();
 
     //Line below shows protection offered par la virtualité de la classe Cpd
-    //cout << Dlmh::cp << Cpd::cp << Dlm::cp << Cpdh::cp << endl;
+    //Rcpp::Rcout << Dlmh::cp << Cpd::cp << Dlm::cp << Cpdh::cp << endl;
 
-    cout << "** checkpts: " << checkpts[0] << " " << checkpts[1] << endl;
-    cout << "** p: " << p << endl;
-    cout << "** maxs: ";
+    Rcpp::Rcout << "** checkpts: " << checkpts[0] << " " << checkpts[1] << endl;
+    Rcpp::Rcout << "** p: " << p << endl;
+    Rcpp::Rcout << "** maxs: ";
     for(auto const& elt : maxs) {
-        cout << elt << " ";
+        Rcpp::Rcout << elt << " ";
     }
-    cout << endl;
+    Rcpp::Rcout << endl;
 }
 
 void Dlmh::update(double const& new_data) {

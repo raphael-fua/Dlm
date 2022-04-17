@@ -32,15 +32,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// sayHi
-void sayHi();
-RcppExport SEXP _Dlm_sayHi() {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    sayHi();
-    return R_NilValue;
-END_RCPP
-}
 // time_dlm
 double time_dlm(std::deque<double> data);
 RcppExport SEXP _Dlm_time_dlm(SEXP dataSEXP) {
@@ -103,16 +94,29 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// test_MHA_constr2
+void test_MHA_constr2(std::deque<double>& v, double const& alpha, double const& nu, int const& i);
+RcppExport SEXP _Dlm_test_MHA_constr2(SEXP vSEXP, SEXP alphaSEXP, SEXP nuSEXP, SEXP iSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::deque<double>& >::type v(vSEXP);
+    Rcpp::traits::input_parameter< double const& >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< double const& >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< int const& >::type i(iSEXP);
+    test_MHA_constr2(v, alpha, nu, i);
+    return R_NilValue;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Dlm_isZero", (DL_FUNC) &_Dlm_isZero, 1},
     {"_Dlm_isWhole", (DL_FUNC) &_Dlm_isWhole, 1},
-    {"_Dlm_sayHi", (DL_FUNC) &_Dlm_sayHi, 0},
     {"_Dlm_time_dlm", (DL_FUNC) &_Dlm_time_dlm, 1},
     {"_Dlm_scores", (DL_FUNC) &_Dlm_scores, 3},
     {"_Dlm_runtime", (DL_FUNC) &_Dlm_runtime, 3},
     {"_Dlm_runtimeOHA", (DL_FUNC) &_Dlm_runtimeOHA, 3},
     {"_Dlm_test_OHA_constr2", (DL_FUNC) &_Dlm_test_OHA_constr2, 3},
+    {"_Dlm_test_MHA_constr2", (DL_FUNC) &_Dlm_test_MHA_constr2, 4},
     {NULL, NULL, 0}
 };
 

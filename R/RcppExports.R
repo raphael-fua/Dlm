@@ -9,10 +9,6 @@ isWhole <- function(x) {
     .Call(`_Dlm_isWhole`, x)
 }
 
-sayHi <- function() {
-    invisible(.Call(`_Dlm_sayHi`))
-}
-
 time_dlm <- function(data) {
     .Call(`_Dlm_time_dlm`, data)
 }
@@ -31,5 +27,9 @@ runtimeOHA <- function(data, alpha, nu) {
 
 test_OHA_constr2 <- function(v, alpha, nu) {
     invisible(.Call(`_Dlm_test_OHA_constr2`, v, alpha, nu))
+}
+
+test_MHA_constr2 <- function(v, alpha, nu, i) {
+    invisible(.Call(`_Dlm_test_MHA_constr2`, v, alpha, nu, i))
 }
 

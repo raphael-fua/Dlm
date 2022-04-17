@@ -21,8 +21,8 @@ Dlm::Dlm(string const& stat_name, deque<double> &v, double const& thresh):
 
 void Dlm::print() const {
     Cpd::print();
-    cout << "** checkpts: " << checkpts[0] << " " << checkpts[1] << endl;
-    cout << "** p: " << p << endl;
+    Rcpp::Rcout << "** checkpts: " << checkpts[0] << " " << checkpts[1] << endl;
+    Rcpp::Rcout << "** p: " << p << endl;
 }
 
 size_t Dlm::peaks() const {

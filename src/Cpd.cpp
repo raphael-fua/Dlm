@@ -57,15 +57,15 @@ void Cpd::update_tcp() {
 }
 
 void Cpd::print() const {
-   cout << "*stat_name: " << stat_name << endl;
-   cout << "* idx, sums:" << endl;
+   Rcpp::Rcout << "*stat_name: " << stat_name << endl;
+   Rcpp::Rcout << "* idx, sums:" << endl;
    for(int i = 0; i < idx.size(); i++) {
-       cout <<"  " << idx[i] << ", " << sums[i] << endl;
+       Rcpp::Rcout <<"  " << idx[i] << ", " << sums[i] << endl;
    }
 
-   cout << "*threshold: " << thresh << endl;
-   cout << "*t: " << t << endl;
-   cout << "*cp: " << cp << endl;
+   Rcpp::Rcout << "*threshold: " << thresh << endl;
+   Rcpp::Rcout << "*t: " << t << endl;
+   Rcpp::Rcout << "*cp: " << cp << endl;
 }
 
 void Cpd::update(const deque<double> &v) {

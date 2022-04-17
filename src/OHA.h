@@ -12,4 +12,3 @@ public:
     void print() const;
     virtual void update(double const& new_data) override;
 };
-
