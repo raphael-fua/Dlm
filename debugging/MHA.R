@@ -1,4 +1,5 @@
 # below, set to TRUE if modifications have been made to cpp package
+cat('\14')
 if(TRUE){
     # Making changes abailable by reloading the package ####
     topDir <- "~/Documents/University/ethz/semester_3/Thesis"
@@ -26,10 +27,11 @@ cat("\n~~~ out of danger zone ~~~\n")
 cat("~~ test_MHA_constr2 ~~\n\n")
 
 N <- 8
-alpha <- .05
+alpha <- .01
 nu <- 100
 i <- 2
-my_data <- 1:N
+set.seed(7)
+my_data <- rnorm(N)
 
 
 cat("\n~ cpp ~\n")
@@ -56,7 +58,12 @@ ski_test <- ski(k, i, my_data)
 
 
 
+valpha <- rep(NA, nu)
+for (n in 1:nu) {
+    valpha[n] <- alpha * (n / (n + nu) - (n - 1) / (n - 1 + nu))
+}
 
+res <- -2 * log(valpha) - log(2 * pi)
 
 
 

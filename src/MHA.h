@@ -14,7 +14,7 @@ public:
     double vvki; // var(V_k^i) (1.4.0.3) for update method
     double cvki;
     double alpha; 
-    double alpha_k;
+    //double alpha_k;
     double nu;
     
     MHA(std::deque<double> &v, 
