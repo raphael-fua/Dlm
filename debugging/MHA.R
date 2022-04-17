@@ -1,6 +1,6 @@
 # below, set to TRUE if modifications have been made to cpp package
 cat('\14')
-if(F){
+if(T){
     # Making changes abailable by reloading the package ####
     topDir <- "~/Documents/University/ethz/semester_3/Thesis"
     pkg_name <- "Dlm"
@@ -20,7 +20,7 @@ if(F){
     install(pkg_name)
 }
 
-if(F){
+if(T){
 # Testing 1: good (don't touch) ####
 
 library(Dlm)
