@@ -1,6 +1,6 @@
 # below, set to TRUE if modifications have been made to cpp package
 cat('\14')
-if(T){
+if(F){
     # Making changes abailable by reloading the package ####
     topDir <- "~/Documents/University/ethz/semester_3/Thesis"
     pkg_name <- "Dlm"
@@ -70,14 +70,24 @@ res <- -2 * log(valpha) - log(2 * pi)
 
 # test 2: test fp rate ####
 library(Dlm)
-nsim <- 10
-N <- 100
+nsim <- 100
+N <- 1000000
 alpha <- .2
-nu <- 100
+nu <- 1
 i <- 2
-set.seed(7)
-my_data <- rnorm(N)
 
-test_MHA_fpr(my_data, alpha, nu, i)
+nfp <- 0 # number of false positives
+count <- 1
+while (count < nsim) {
+    print(count)
+    count <- count + 1
+    if(! test_MHA_fpr(rnorm(N), alpha, nu, i)) {
+        nfp <- nfp + 1
+    }
+}
+
+cat('fpr:', nfp / nsim, '\n')
+
+    
 
 # we expect a slightly smaller fpr than alpha since N != infinity

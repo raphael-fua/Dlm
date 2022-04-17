@@ -40,3 +40,5 @@ bool test_MHA_fpr (std::deque<double> &v, double const& alpha, double const& nu,
     MHA mha(v, alpha, nu, i);
     return(mha.t == -1);
 }
+
+

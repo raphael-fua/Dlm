@@ -1,21 +1,17 @@
 #pragma once
 #include "Cpd.h"
 
-
-
-// Generalized Hahn Algorithm for one specific dyadic
 class GHA : public virtual Cpd {
-// public:
-//     const int i;
-//     const double pi;
-//     int k;
-//     double ski; // s_k^i (1.2.0.2) at time of writing (atw)
-//     double vki; // V_k^i (1.2.0.4) atw
-//     double vvki; // var(V_k^i) (1.4.0.3) for update method
-//     double cvki;
-//     double alpha; 
-//     //double alpha_k;
-//     double nu;
+public:
+    deque<int> v_i;
+    deque<double> v_pi;
+    deque<int> v_k;
+    deque<double> v_ski; 
+    deque<double> v_vki; 
+    deque<double> v_vvki; 
+    deque<double> v_cvki;
+    const double alpha; 
+    const double nu;
 //     
 //     MHA(std::deque<double> &v, 
 //         double const& alpha, 
