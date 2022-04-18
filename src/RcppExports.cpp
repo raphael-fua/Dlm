@@ -158,18 +158,6 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
-// runtimeAOS
-int runtimeAOS(std::deque<double>& v, double const& thresh);
-RcppExport SEXP _Dlm_runtimeAOS(SEXP vSEXP, SEXP threshSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::deque<double>& >::type v(vSEXP);
-    Rcpp::traits::input_parameter< double const& >::type thresh(threshSEXP);
-    rcpp_result_gen = Rcpp::wrap(runtimeAOS(v, thresh));
-    return rcpp_result_gen;
-END_RCPP
-}
 // EvalStatL2
 double EvalStatL2(NumericMatrix& S, int s, int t);
 RcppExport SEXP _Dlm_EvalStatL2(SEXP SSEXP, SEXP sSEXP, SEXP tSEXP) {
@@ -224,6 +212,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// runtimeAOS
+int runtimeAOS(Rcpp::NumericMatrix& S, double const& thresh);
+RcppExport SEXP _Dlm_runtimeAOS(SEXP SSEXP, SEXP threshSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type S(SSEXP);
+    Rcpp::traits::input_parameter< double const& >::type thresh(threshSEXP);
+    rcpp_result_gen = Rcpp::wrap(runtimeAOS(S, thresh));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Dlm_isZero", (DL_FUNC) &_Dlm_isZero, 1},
@@ -238,11 +238,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Dlm_runtimeMHA", (DL_FUNC) &_Dlm_runtimeMHA, 4},
     {"_Dlm_runtimeGHA", (DL_FUNC) &_Dlm_runtimeGHA, 2},
     {"_Dlm_compare_OHAvMHA1", (DL_FUNC) &_Dlm_compare_OHAvMHA1, 3},
-    {"_Dlm_runtimeAOS", (DL_FUNC) &_Dlm_runtimeAOS, 2},
     {"_Dlm_EvalStatL2", (DL_FUNC) &_Dlm_EvalStatL2, 3},
     {"_Dlm_OneStepSearch", (DL_FUNC) &_Dlm_OneStepSearch, 3},
     {"_Dlm_NaiveOS", (DL_FUNC) &_Dlm_NaiveOS, 6},
     {"_Dlm_AdvancedOS", (DL_FUNC) &_Dlm_AdvancedOS, 2},
+    {"_Dlm_runtimeAOS", (DL_FUNC) &_Dlm_runtimeAOS, 2},
     {NULL, NULL, 0}
 };
 

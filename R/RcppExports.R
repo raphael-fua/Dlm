@@ -49,10 +49,6 @@ compare_OHAvMHA1 <- function(data, alpha, nu) {
     invisible(.Call(`_Dlm_compare_OHAvMHA1`, data, alpha, nu))
 }
 
-runtimeAOS <- function(v, thresh) {
-    .Call(`_Dlm_runtimeAOS`, v, thresh)
-}
-
 EvalStatL2 <- function(S, s, t) {
     .Call(`_Dlm_EvalStatL2`, S, s, t)
 }
@@ -67,5 +63,9 @@ NaiveOS <- function(S, shift = 0L, l = -1L, s = -1L, r = -1L, stat_s = -1) {
 
 AdvancedOS <- function(S, shift) {
     .Call(`_Dlm_AdvancedOS`, S, shift)
+}
+
+runtimeAOS <- function(S, thresh) {
+    .Call(`_Dlm_runtimeAOS`, S, thresh)
 }
 
