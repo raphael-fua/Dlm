@@ -15,10 +15,13 @@ std::deque<double> scores(std::string stat_name, std::deque<double> data, double
     Dlmh dlmh(stat_name, data, thresh);
     return dlmh.maxs;
 }
+
+
 int runtime(std::string stat_name, std::deque<double> data, double thresh) {
     Dlm dlm(stat_name, data, thresh);
     return dlm.t;
 }
+
 int runtimeOHA(std::deque<double> &data, double const& alpha, double const& nu) {
     OHA oha(data, alpha, nu);
     return oha.t;
@@ -49,5 +52,17 @@ int runtimeMHA(std::deque<double> &data, double const& alpha, double const& nu, 
     return mha.t;
 }
 
+int runtimeGHA(std::deque<double> &v, double const& thresh) {
+    GHA gha(v, thresh);
+    return gha.t;
+}
 
 
+void compare_OHAvMHA1(std::deque<double> &data, double const& alpha, double const& nu) {
+    OHA oha(data, alpha, nu);
+    MHA mha(data, alpha, nu, 1);
+
+    oha.print();
+    Rcpp::Rcout << "------------------------------" << std::endl;
+    mha.print();
+}

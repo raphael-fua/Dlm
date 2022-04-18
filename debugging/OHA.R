@@ -1,26 +1,5 @@
-# below, set to TRUE if modifications have been made to cpp package
-if(FALSE){
-    # Making changes abailable by reloading the package ####
-    topDir <- "~/Documents/University/ethz/semester_3/Thesis"
-    pkg_name <- "Dlm"
-    bottomDir <- paste0(topDir, '/', pkg_name)
-    setwd(topDir)
-    
-    library("Rcpp")
-    compileAttributes(pkgdir = paste0("./", pkg_name), verbose = TRUE) # makes RcppExports.cpp
-    
-    library("devtools")
-    library("roxygen2")
-    setwd(bottomDir)
-    devtools::load_all()
-    document()
-    
-    setwd(topDir)
-    install(pkg_name)
-}
-
-# Testing 1: good (don't touch) ####
-
+cat('\14')
+if(FALSE){ rebuild() }
 library(Dlm)
 cat("\n~~~ out of danger zone ~~~\n")
 cat("~~ test_OHA_constr2 ~~\n\n")

@@ -25,10 +25,6 @@ runtimeOHA <- function(data, alpha, nu) {
     .Call(`_Dlm_runtimeOHA`, data, alpha, nu)
 }
 
-test_OHA_constr2 <- function(v, alpha, nu) {
-    invisible(.Call(`_Dlm_test_OHA_constr2`, v, alpha, nu))
-}
-
 test_MHA_constr2 <- function(v, alpha, nu, i) {
     invisible(.Call(`_Dlm_test_MHA_constr2`, v, alpha, nu, i))
 }
@@ -43,6 +39,18 @@ test_GHA_constr2 <- function(v, thresh) {
 
 runtimeMHA <- function(data, alpha, nu, i) {
     .Call(`_Dlm_runtimeMHA`, data, alpha, nu, i)
+}
+
+runtimeGHA <- function(v, thresh) {
+    .Call(`_Dlm_runtimeGHA`, v, thresh)
+}
+
+compare_OHAvMHA1 <- function(data, alpha, nu) {
+    invisible(.Call(`_Dlm_compare_OHAvMHA1`, data, alpha, nu))
+}
+
+runtimeAOS <- function(v, thresh) {
+    .Call(`_Dlm_runtimeAOS`, v, thresh)
 }
 
 EvalStatL2 <- function(S, s, t) {

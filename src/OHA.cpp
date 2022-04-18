@@ -27,11 +27,12 @@ void OHA::update(const double &new_data) {
     sums[0] += new_data;
     if (idx[0] % 2 == 0) {
         sHalf += sums[0] / idx[0];
-        double V = sqrt(idx[0]) * (sHalf / (idx[0] / 2) - sums[0] / idx[0]);
-        
-        if((2 * pow(abs(V) - 1, 2) > thresh) and (t == -1)) {
-            t = idx[0];
-            cp = t / 2;
+        if(idx[0] != 2) {
+            double V = sqrt(idx[0]) * (sHalf / (idx[0] / 2) - sums[0] / idx[0]);
+            if((2 * pow(abs(V) - 1, 2) > thresh) and (t == -1)) {
+                t = idx[0];
+                cp = t / 2;
+            }
         }
         double n = idx[0] / 2;
         thresh = -2 * log(alpha * (n / (n + nu) - (n - 1) / (n -1  + nu))) - log(2 * M_PI);

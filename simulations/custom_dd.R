@@ -1,33 +1,43 @@
 source('helper_functions.r')
 
-cORES_1 <- 4
-cORES_2 <- sqrt(CORES_1)
-nREP <- CORES_1
+CORES_1 <- 4
+CORES_2 <- sqrt(CORES_1)
+NREP <- CORES_1
 if(! isWhole(CORES_2)) {
     stop('sqrt(CORES_1) must be an integer')
 }
 
-sEED <- 42
+SEED <- 42
 
-run_simulation <- function(p, REPS, noise, thresh, alpha, nu) {
+run_simulation <- function(p, REPS, noise, thresh, alpha, nu, i, thresh_GHA) {
     
     data <- mclapply(X = noise, FUN = function (eps) { c(rep(0, p$changepoint), rep(p$delta, p$N - p$changepoint)) + eps }, mc.cores = CORES_1)
     
     print("DLM")
     cp <- unlist(mclapply(X = data, FUN = runtime, stat_name = "cusum", thresh = thresh, mc.cores = CORES_1))
     output <- data.frame(sim = 1:REPS, magnitude = p$delta, algo = "DLM", est = cp, real = p$changepoint, N = p$N)
-    
+
     print("OHA_alpha")
     cp <-  unlist(mclapply(X = data,  FUN = runtimeOHA, alpha = alpha, nu = nu, mc.cores = CORES_1))
     output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = "OHA_alpha", est = cp, real = p$changepoint, N = p$N))
-    
-    print("MHA_alpha")
-    cp <-  unlist(mclapply(X = data,  FUN = runtimeOHA, alpha = alpha, nu = nu, mc.cores = CORES_1))
-    output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = "MHA_alpha", est = cp, real = p$changepoint, N = p$N))
+
+    print("MHA_alpha i = 1")
+    cp <-  unlist(mclapply(X = data,  FUN = runtimeMHA, alpha = alpha, nu = nu, i = 1, mc.cores = CORES_1))
+    output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = "MHA_alpha i = 1", est = cp, real = p$changepoint, N = p$N))
+
+    print(paste("MHA_alpha i =", i))
+    cp <-  unlist(mclapply(X = data,  FUN = runtimeMHA, alpha = alpha, nu = nu, i = i, mc.cores = CORES_1))
+    output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = paste("MHA_alpha i =", i), est = cp, real = p$changepoint, N = p$N))
+
+    print("GHA")
+    cp <-  unlist(mclapply(X = data,  FUN = runtimeGHA, thresh = thresh_GHA, mc.cores = CORES_1))
+    output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = "GHA", est = cp, real = p$changepoint, N = p$N))
+
     
     return(output)
 }
 
+thresh_GHA <- 4 
 load(file = "results/avg_run_len.RData") # 'thre' and 'N' loaded
 
 realCP <- N / 20
@@ -52,7 +62,12 @@ if (T) {
     cat('l_noise done. '); print(Sys.time() - t0); 
     
     t0 <- Sys.time()
-    outDF <-  mclapply(seq_len(nrow(sim_grid)), function (i) {p <- sim_grid[i, ] return(run_simulation(p, NREP, noise, thresh = thre))}, mc.cores = CORES_2 )
+    outDF <-  
+        mclapply(
+            seq_len(nrow(sim_grid)), 
+            function (i) {
+                p <- sim_grid[i, ]
+                return(run_simulation(p, NREP, noise, thresh = thre, .05, 100, 2, thresh_GHA))}, mc.cores = CORES_2 )
     cat('outDF. '); print(Sys.time() - t0); 
     
     outDF <- Reduce(rbind, outDF)
@@ -114,8 +129,6 @@ cbPalette <- RColorBrewer::brewer.pal(6, "Paired")[c(2, 3, 4, 5, 6)]
 
 detection_delay <-
     ggplot(
-        #grouped ,
-        #grouped %>% filter(!(algo %in% c("FOCuS-t", "FOCuS0 1000"))),
         grouped %>% filter(!(algo %in% c("FOCuS-t"))),
         aes(
             x = magnitude,

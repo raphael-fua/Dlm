@@ -82,18 +82,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// test_OHA_constr2
-void test_OHA_constr2(std::deque<double>& v, double const& alpha, double const& nu);
-RcppExport SEXP _Dlm_test_OHA_constr2(SEXP vSEXP, SEXP alphaSEXP, SEXP nuSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::deque<double>& >::type v(vSEXP);
-    Rcpp::traits::input_parameter< double const& >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< double const& >::type nu(nuSEXP);
-    test_OHA_constr2(v, alpha, nu);
-    return R_NilValue;
-END_RCPP
-}
 // test_MHA_constr2
 void test_MHA_constr2(std::deque<double>& v, double const& alpha, double const& nu, int const& i);
 RcppExport SEXP _Dlm_test_MHA_constr2(SEXP vSEXP, SEXP alphaSEXP, SEXP nuSEXP, SEXP iSEXP) {
@@ -143,6 +131,42 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double const& >::type nu(nuSEXP);
     Rcpp::traits::input_parameter< int const& >::type i(iSEXP);
     rcpp_result_gen = Rcpp::wrap(runtimeMHA(data, alpha, nu, i));
+    return rcpp_result_gen;
+END_RCPP
+}
+// runtimeGHA
+int runtimeGHA(std::deque<double>& v, double const& thresh);
+RcppExport SEXP _Dlm_runtimeGHA(SEXP vSEXP, SEXP threshSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::deque<double>& >::type v(vSEXP);
+    Rcpp::traits::input_parameter< double const& >::type thresh(threshSEXP);
+    rcpp_result_gen = Rcpp::wrap(runtimeGHA(v, thresh));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compare_OHAvMHA1
+void compare_OHAvMHA1(std::deque<double>& data, double const& alpha, double const& nu);
+RcppExport SEXP _Dlm_compare_OHAvMHA1(SEXP dataSEXP, SEXP alphaSEXP, SEXP nuSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::deque<double>& >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< double const& >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< double const& >::type nu(nuSEXP);
+    compare_OHAvMHA1(data, alpha, nu);
+    return R_NilValue;
+END_RCPP
+}
+// runtimeAOS
+int runtimeAOS(std::deque<double>& v, double const& thresh);
+RcppExport SEXP _Dlm_runtimeAOS(SEXP vSEXP, SEXP threshSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::deque<double>& >::type v(vSEXP);
+    Rcpp::traits::input_parameter< double const& >::type thresh(threshSEXP);
+    rcpp_result_gen = Rcpp::wrap(runtimeAOS(v, thresh));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -208,11 +232,13 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Dlm_scores", (DL_FUNC) &_Dlm_scores, 3},
     {"_Dlm_runtime", (DL_FUNC) &_Dlm_runtime, 3},
     {"_Dlm_runtimeOHA", (DL_FUNC) &_Dlm_runtimeOHA, 3},
-    {"_Dlm_test_OHA_constr2", (DL_FUNC) &_Dlm_test_OHA_constr2, 3},
     {"_Dlm_test_MHA_constr2", (DL_FUNC) &_Dlm_test_MHA_constr2, 4},
     {"_Dlm_test_MHA_fpr", (DL_FUNC) &_Dlm_test_MHA_fpr, 4},
     {"_Dlm_test_GHA_constr2", (DL_FUNC) &_Dlm_test_GHA_constr2, 2},
     {"_Dlm_runtimeMHA", (DL_FUNC) &_Dlm_runtimeMHA, 4},
+    {"_Dlm_runtimeGHA", (DL_FUNC) &_Dlm_runtimeGHA, 2},
+    {"_Dlm_compare_OHAvMHA1", (DL_FUNC) &_Dlm_compare_OHAvMHA1, 3},
+    {"_Dlm_runtimeAOS", (DL_FUNC) &_Dlm_runtimeAOS, 2},
     {"_Dlm_EvalStatL2", (DL_FUNC) &_Dlm_EvalStatL2, 3},
     {"_Dlm_OneStepSearch", (DL_FUNC) &_Dlm_OneStepSearch, 3},
     {"_Dlm_NaiveOS", (DL_FUNC) &_Dlm_NaiveOS, 6},

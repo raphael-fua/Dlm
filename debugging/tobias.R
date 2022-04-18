@@ -1,24 +1,6 @@
 # below, set to TRUE if modifications have been made to cpp package
 cat('\14')
-if(T){
-    # Making changes abailable by reloading the package ####
-    topDir <- "~/Documents/University/ethz/semester_3/Thesis"
-    pkg_name <- "Dlm"
-    bottomDir <- paste0(topDir, '/', pkg_name)
-    setwd(topDir)
-    
-    library("Rcpp")
-    compileAttributes(pkgdir = paste0("./", pkg_name), verbose = TRUE) # makes RcppExports.cpp
-    
-    library("devtools")
-    library("roxygen2")
-    setwd(bottomDir)
-    devtools::load_all()
-    document()
-    
-    setwd(topDir)
-    install(pkg_name)
-}
+if(T){ rebuild() }
 
 set.seed(1)
 noise <- 1
@@ -29,9 +11,9 @@ plot(X)
 S <- matrix(cumsum(c(0,X)), nrow=1)
 
 # Binary Segmentation
-OneStepSearch(S, shift=0, method="naive")
-OneStepSearch(S, shift=0, method="advanced")
-OneStepSearch(S, shift=0, method="combined")
-OneStepSearch(S, shift=0, method="full")
+print(OneStepSearch(S, shift=0, method="naive"))
+print(OneStepSearch(S, shift=0, method="advanced"))
+print(OneStepSearch(S, shift=0, method="combined"))
+print(OneStepSearch(S, shift=0, method="full"))
 # $ind = candidate indices
 # $stat is CUSUM statistic at ind (sqrt of log-likelihood ratio)
