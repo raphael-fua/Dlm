@@ -33,7 +33,6 @@ deque<double> Cpd::stat() const {
 
     return res;
 }
-
 void Cpd::update_tcp() {
     int T (idx.back());
     if ((t < 0) & (T != 1)) {

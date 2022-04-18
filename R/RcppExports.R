@@ -41,6 +41,10 @@ test_GHA_constr2 <- function(v, thresh) {
     invisible(.Call(`_Dlm_test_GHA_constr2`, v, thresh))
 }
 
+runtimeMHA <- function(data, alpha, nu, i) {
+    .Call(`_Dlm_runtimeMHA`, data, alpha, nu, i)
+}
+
 EvalStatL2 <- function(S, s, t) {
     .Call(`_Dlm_EvalStatL2`, S, s, t)
 }

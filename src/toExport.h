@@ -31,8 +31,8 @@ bool test_MHA_fpr (std::deque<double> &v, double const& alpha, double const& nu,
 // [[Rcpp::export]]
 void test_GHA_constr2 (std::deque<double> &v, double const& thresh);
 
+// [[Rcpp::export]]
+int runtimeMHA(std::deque<double> &data, double const& alpha, double const& nu, int const& i);
 
-
-
-
-
+// // [[Rcpp::export]]
+//int runtimeGHA(std::deque<double> &data, double const& alpha, double const& nu, int const& i);

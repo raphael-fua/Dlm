@@ -132,6 +132,20 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// runtimeMHA
+int runtimeMHA(std::deque<double>& data, double const& alpha, double const& nu, int const& i);
+RcppExport SEXP _Dlm_runtimeMHA(SEXP dataSEXP, SEXP alphaSEXP, SEXP nuSEXP, SEXP iSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::deque<double>& >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< double const& >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< double const& >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< int const& >::type i(iSEXP);
+    rcpp_result_gen = Rcpp::wrap(runtimeMHA(data, alpha, nu, i));
+    return rcpp_result_gen;
+END_RCPP
+}
 // EvalStatL2
 double EvalStatL2(NumericMatrix& S, int s, int t);
 RcppExport SEXP _Dlm_EvalStatL2(SEXP SSEXP, SEXP sSEXP, SEXP tSEXP) {
@@ -198,6 +212,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Dlm_test_MHA_constr2", (DL_FUNC) &_Dlm_test_MHA_constr2, 4},
     {"_Dlm_test_MHA_fpr", (DL_FUNC) &_Dlm_test_MHA_fpr, 4},
     {"_Dlm_test_GHA_constr2", (DL_FUNC) &_Dlm_test_GHA_constr2, 2},
+    {"_Dlm_runtimeMHA", (DL_FUNC) &_Dlm_runtimeMHA, 4},
     {"_Dlm_EvalStatL2", (DL_FUNC) &_Dlm_EvalStatL2, 3},
     {"_Dlm_OneStepSearch", (DL_FUNC) &_Dlm_OneStepSearch, 3},
     {"_Dlm_NaiveOS", (DL_FUNC) &_Dlm_NaiveOS, 6},

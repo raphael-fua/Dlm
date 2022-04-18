@@ -4,9 +4,8 @@ using namespace std;
 OHA::OHA(deque<double> &v, double const& alpha, double const& nu):
     Cpd("sOHA", 
         deque<size_t> {1}, 
-        deque<double> {v[0]}, -2 * log(alpha / (1 + nu)) - log(2 * M_PI),
-        -1, 
-        -1
+        deque<double> {v[0]},
+        0, -1, -1
     ), 
     sHalf (0.0),
     alpha (alpha),
@@ -35,6 +34,6 @@ void OHA::update(const double &new_data) {
             cp = t / 2;
         }
         double n = idx[0] / 2;
-        thresh = -2 * log(alpha * ((n + 1) / (n + 1 + nu) - n / (n + nu))) - log(2 * M_PI);
+        thresh = -2 * log(alpha * (n / (n + nu) - (n - 1) / (n -1  + nu))) - log(2 * M_PI);
     }
 }

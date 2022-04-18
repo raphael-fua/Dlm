@@ -1,5 +1,5 @@
 # below, set to TRUE if modifications have been made to cpp package
-if(TRUE){
+if(FALSE){
     # Making changes abailable by reloading the package ####
     topDir <- "~/Documents/University/ethz/semester_3/Thesis"
     pkg_name <- "Dlm"
@@ -76,7 +76,7 @@ for (n in 1:100) {
 plot(v)
 
 cat('R alpha', N/2, ':', falpha(N/2, nu, alpha), '\n')
-cat('corresponding r threshold', - 2 * log(falpha(N/2+1, nu, alpha)) - log(2 * pi), '\n') 
+cat('corresponding r threshold', - 2 * log(falpha(N/2, nu, alpha)) - log(2 * pi), '\n') 
 
 
 cat("\n~ cpp ~\n")

@@ -44,11 +44,10 @@ void test_GHA_constr2 (std::deque<double> &v, double const& thresh) {
     gha.print();
 }
 
-
-
-
-
-
+int runtimeMHA(std::deque<double> &data, double const& alpha, double const& nu, int const& i) {
+    MHA mha(data, alpha, nu, i);
+    return mha.t;
+}
 
 
 

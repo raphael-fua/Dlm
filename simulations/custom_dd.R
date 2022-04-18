@@ -23,22 +23,10 @@ run_simulation <- function(p, REPS, noise, thresh, alpha, nu) {
     
     print("MHA_alpha")
     cp <-  unlist(mclapply(X = data,  FUN = runtimeOHA, alpha = alpha, nu = nu, mc.cores = CORES_1))
-    output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = "OHA_alpha", est = cp, real = p$changepoint, N = p$N))
+    output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = "MHA_alpha", est = cp, real = p$changepoint, N = p$N))
     
-    
-    return(
-        data.frame(
-            sim = 1:REPS, 
-            magnitude = p$delta, 
-            algo = "Dlm", 
-            est = cp, 
-            real = p$changepoint, 
-            N = p$N
-        )
-    )
+    return(output)
 }
-
-
 
 load(file = "results/avg_run_len.RData") # 'thre' and 'N' loaded
 
@@ -47,12 +35,12 @@ realCP <- N / 20
 pows <- seq(5, 0, length.out = 10)
 sim_grid <- 
     expand.grid(
-        N = 3 * N / 2,
+        N = 3 * N / 2, # instead of of 4 * N in focus as we have no training data
         changepoint = realCP,
         delta = c(- .5 ^ pows, .5 ^ pows) %>% sort
     )
 
-output_file <- "results/detection_rate.RData"
+output_file <- "results/custom_dd.RData"
 
 if (T) {
     
@@ -64,16 +52,7 @@ if (T) {
     cat('l_noise done. '); print(Sys.time() - t0); 
     
     t0 <- Sys.time()
-    outDF <- 
-        mclapply(
-            seq_len(nrow(sim_grid)), 
-            function (i) {
-                p <- sim_grid[i, ]
-                return(run_simulation(p, NREP, noise, thresh = thre))
-            },
-            mc.cores = CORES_2
-        )
-    # ↓ expecting 20 * dlm_run from avg_run_len
+    outDF <-  mclapply(seq_len(nrow(sim_grid)), function (i) {p <- sim_grid[i, ] return(run_simulation(p, NREP, noise, thresh = thre))}, mc.cores = CORES_2 )
     cat('outDF. '); print(Sys.time() - t0); 
     
     outDF <- Reduce(rbind, outDF)
