@@ -1,6 +1,6 @@
 # below, set to TRUE if modifications have been made to cpp package
 cat('\14')
-if(T){ rebuild() }
+if(F){ rebuild() }
 
 library(Dlm)
 set.seed(1)
@@ -22,7 +22,8 @@ for (i in 5:201) {
     SS <- matrix(S[1:i], nrow = 1)
     print(OneStepSearch(SS, shift=0, method="combined")$stat)
 }
-
+cat('------------------------------\n')
 
 
 print(runtimeAOS(S, 6))
+

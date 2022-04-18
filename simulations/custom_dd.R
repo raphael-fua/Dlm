@@ -9,8 +9,8 @@ if(! isWhole(CORES_2)) {
 
 SEED <- 42
 
-run_simulation <- function(p, REPS, noise, thresh, alpha, nu, i, thresh_GHA) {
-    
+run_simulation <- function(p, REPS, noise, thresh, alpha, nu, i, thresh_GHA, tresh_AOS) {
+    cat('\n'); print(p)
     data <- mclapply(X = noise, FUN = function (eps) { c(rep(0, p$changepoint), rep(p$delta, p$N - p$changepoint)) + eps }, mc.cores = CORES_1)
     
     print("DLM")
@@ -33,21 +33,31 @@ run_simulation <- function(p, REPS, noise, thresh, alpha, nu, i, thresh_GHA) {
     cp <-  unlist(mclapply(X = data,  FUN = runtimeGHA, thresh = thresh_GHA, mc.cores = CORES_1))
     output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = "GHA", est = cp, real = p$changepoint, N = p$N))
 
+    print("AOS")
+    print("S start")
+    S <- mclapply(X = data , FUN = function(d) { return(matrix(cumsum(c(0,d)), nrow=1)) }, mc.cores = CORES_1)
+    print("S done")
+    cp <-  unlist(mclapply(X = S,  FUN = runtimeAOS, thresh = thresh_AOS, mc.cores = CORES_1))
+    output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = "AOS", est = cp, real = p$changepoint, N = p$N))
     
     return(output)
 }
 
 thresh_GHA <- 4 
+thresh_AOS <- 6
 load(file = "results/avg_run_len.RData") # 'thre' and 'N' loaded
 
 realCP <- N / 20
 
+customDelta <- c(- .5 ^ pows, .5 ^ pows) %>% sort 
+customDelta <- customDelta[c(-9, -10, -11, -12)]
 pows <- seq(5, 0, length.out = 10)
 sim_grid <- 
     expand.grid(
         N = 3 * N / 2, # instead of of 4 * N in focus as we have no training data
         changepoint = realCP,
-        delta = c(- .5 ^ pows, .5 ^ pows) %>% sort
+        delta = customDelta
+        #delta = c(- .5 ^ pows, .5 ^ pows) %>% sort
     )
 
 output_file <- "results/custom_dd.RData"
@@ -62,19 +72,28 @@ if (T) {
     cat('l_noise done. '); print(Sys.time() - t0); 
     
     t0 <- Sys.time()
+    # outDF <-  
+    #     mclapply(
+    #         seq_len(nrow(sim_grid)), 
+    #         function (i) {
+    #             p <- sim_grid[i, ]
+    #             return(run_simulation(p, NREP, noise, thresh = thre, .05, 100, 2, thresh_GHA))}, mc.cores = CORES_2 )
+    
     outDF <-  
-        mclapply(
+        lapply(
             seq_len(nrow(sim_grid)), 
             function (i) {
                 p <- sim_grid[i, ]
-                return(run_simulation(p, NREP, noise, thresh = thre, .05, 100, 2, thresh_GHA))}, mc.cores = CORES_2 )
+                return(run_simulation(p, NREP, noise, thresh = thre, .05, 100, 2, thresh_GHA, thresh_AOS))
+            }
+        )
+    
     cat('outDF. '); print(Sys.time() - t0); 
     
     outDF <- Reduce(rbind, outDF)
     save(outDF, file = output_file)
 }
-
-
+print(1)
 load(output_file)
 
 summary_df <- outDF %>% mutate(
@@ -125,7 +144,7 @@ generate_labels <- function (dataset, var, XFUNC) {
 data_label <- generate_labels(grouped, "magnitude", max)
 
 cbPalette <- RColorBrewer::brewer.pal(6, "Paired")[c(2, 1, 3, 4, 5, 6)]
-cbPalette <- RColorBrewer::brewer.pal(6, "Paired")[c(2, 3, 4, 5, 6)]
+#cbPalette <- RColorBrewer::brewer.pal(6, "Paired")[c(2, 3, 4, 5, 6)]
 
 detection_delay <-
     ggplot(

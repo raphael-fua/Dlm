@@ -160,7 +160,7 @@ List AdvancedOS(NumericMatrix &S, int shift){
 
 int runtimeAOS(Rcpp::NumericMatrix &S, double const& thresh) {
     int t = -1;
-    int i = 3; // cannot call OneStepSearch if SS has too few columns
+    int i = 4; // cannot call OneStepSearch if SS has too few columns
     while((t == -1) and (i < S.ncol())) {
         NumericMatrix SS = S(Range(0, 0), Range(0, i));
         // Copying the row (0 to 1) and column (2 to 3) to the matrix m2
