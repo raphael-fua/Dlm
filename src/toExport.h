@@ -2,6 +2,7 @@
 #include "Dlmh.h"
 #include "OHA.h"
 #include "MHA.h"
+#include "GHA.h"
 #include <chrono>
 #include <string>
 // [[Rcpp::plugins("cpp11")]]
@@ -27,7 +28,8 @@ void test_MHA_constr2 (std::deque<double> &v, double const& alpha, double const&
 // [[Rcpp::export]]
 bool test_MHA_fpr (std::deque<double> &v, double const& alpha, double const& nu, int const& i);
 
-
+// [[Rcpp::export]]
+void test_GHA_constr2 (std::deque<double> &v, double const& thresh);
 
 
 

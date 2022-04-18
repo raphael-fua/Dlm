@@ -37,3 +37,23 @@ test_MHA_fpr <- function(v, alpha, nu, i) {
     .Call(`_Dlm_test_MHA_fpr`, v, alpha, nu, i)
 }
 
+test_GHA_constr2 <- function(v, thresh) {
+    invisible(.Call(`_Dlm_test_GHA_constr2`, v, thresh))
+}
+
+EvalStatL2 <- function(S, s, t) {
+    .Call(`_Dlm_EvalStatL2`, S, s, t)
+}
+
+OneStepSearch <- function(S, shift = 0L, method = "advanced") {
+    .Call(`_Dlm_OneStepSearch`, S, shift, method)
+}
+
+NaiveOS <- function(S, shift = 0L, l = -1L, s = -1L, r = -1L, stat_s = -1) {
+    .Call(`_Dlm_NaiveOS`, S, shift, l, s, r, stat_s)
+}
+
+AdvancedOS <- function(S, shift) {
+    .Call(`_Dlm_AdvancedOS`, S, shift)
+}
+

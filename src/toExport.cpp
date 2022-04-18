@@ -16,7 +16,7 @@ std::deque<double> scores(std::string stat_name, std::deque<double> data, double
     return dlmh.maxs;
 }
 int runtime(std::string stat_name, std::deque<double> data, double thresh) {
-    Dlmh dlm(stat_name, data, thresh);
+    Dlm dlm(stat_name, data, thresh);
     return dlm.t;
 }
 int runtimeOHA(std::deque<double> &data, double const& alpha, double const& nu) {
@@ -34,11 +34,21 @@ void test_MHA_constr2 (std::deque<double> &v, double const& alpha, double const&
     MHA mha(v, alpha, nu, i);
     mha.print();
 }
-
-
 bool test_MHA_fpr (std::deque<double> &v, double const& alpha, double const& nu, int const & i) {
     MHA mha(v, alpha, nu, i);
     return(mha.t == -1);
 }
+
+void test_GHA_constr2 (std::deque<double> &v, double const& thresh) {
+    GHA gha(v, thresh);
+    gha.print();
+}
+
+
+
+
+
+
+
 
 

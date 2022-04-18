@@ -1,23 +1,19 @@
 #pragma once
 #include "Cpd.h"
 
-// class GHA : public virtual Cpd {
-// public:
-//     deque<int> v_i;
-//     deque<double> v_pi;
-//     deque<int> v_k;
-//     deque<double> v_ski; 
-//     deque<double> v_vki; 
-//     deque<double> v_vvki; 
-//     deque<double> v_cvki;
-//     const double alpha; 
-//     const double nu;
-// //     
-// //     MHA(std::deque<double> &v, 
-// //         double const& alpha, 
-// //         double const& nu, 
-// //         int const& i
-// //     );
-// //     void print() const;
-// //     virtual void update(double const& new_data) override;
-// };
+class GHA : public virtual Cpd {
+public:
+    std::deque<int> v_i;
+    std::deque<double> v_pi;
+    std::deque<int> v_k;
+    std::deque<double> v_ski;
+    std::deque<double> v_vki;
+    std::deque<double> v_vvki;
+    std::deque<double> v_cvki;
+    double Z; // max_i (cvki)^2 =>  [if (argmax(cvk . )^2 = j = v_i[s]) and (Z > thre),
+              //                    [then cp = v_k[s] 2^v_i[s] "=" k_j 2^j ]
+
+    GHA(std::deque<double> &v, double const& thresh);
+    void print() const;
+    virtual void update(double const& new_data) override;
+};

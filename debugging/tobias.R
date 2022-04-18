@@ -1,6 +1,6 @@
 # below, set to TRUE if modifications have been made to cpp package
 cat('\14')
-if(F){
+if(T){
     # Making changes abailable by reloading the package ####
     topDir <- "~/Documents/University/ethz/semester_3/Thesis"
     pkg_name <- "Dlm"
@@ -20,35 +20,18 @@ if(F){
     install(pkg_name)
 }
 
-# Testing 1 ####
+set.seed(1)
+noise <- 1
+X <- rep(0:1,c(100,100)) + rnorm(200, 0, noise)
+plot(X)
 
-library(Dlm)
-cat("\n~~~ out of danger zone ~~~\n")
-cat("~~ test_MHA_constr2 ~~\n")
+# You need to add a S_0 = 0 (empty sum)
+S <- matrix(cumsum(c(0,X)), nrow=1)
 
-cat("~ cpp ~\n\n")
-v <- 16:20
-thresh <- 10 
-test_GHA_constr2(v, 1)
-cat('------------------------------\n')
-set.seed(7)
-d <- rnorm(100)
-test_GHA_constr2(d, 1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
+# Binary Segmentation
+OneStepSearch(S, shift=0, method="naive")
+OneStepSearch(S, shift=0, method="advanced")
+OneStepSearch(S, shift=0, method="combined")
+OneStepSearch(S, shift=0, method="full")
+# $ind = candidate indices
+# $stat is CUSUM statistic at ind (sqrt of log-likelihood ratio)

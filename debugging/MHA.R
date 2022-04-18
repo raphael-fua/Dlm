@@ -1,6 +1,6 @@
 # below, set to TRUE if modifications have been made to cpp package
 cat('\14')
-if(T){
+if(F){
     # Making changes abailable by reloading the package ####
     topDir <- "~/Documents/University/ethz/semester_3/Thesis"
     pkg_name <- "Dlm"
@@ -26,18 +26,26 @@ if(T){
 library(Dlm)
 cat("\n~~~ out of danger zone ~~~\n")
 cat("~~ test_MHA_constr2 ~~\n\n")
-
-N <- 8
-alpha <- .01
-nu <- 100
-i <- 2
-set.seed(7)
-my_data <- rnorm(N)
-
-
 cat("\n~ cpp ~\n")
-#cat('runtime (t):', runtimeOHA(my_data, alpha, nu, i), '\n')
-test_MHA_constr2(my_data, alpha, nu, i)    
+N <- 1e6
+alpha <- .3
+nu <- 1
+i <- 2
+
+set.seed(7)
+sink(file = 'debugging/output/test_MHA_constr2.txt')
+for (count in 1:100) {
+    cat('------------------------------\n')
+    cat('-', count, '\n')
+    cat('------------------------------\n')
+    my_data <- rnorm(N)
+    test_MHA_constr2(my_data, alpha, nu, i)  
+    cat('\n')
+}
+sink()
+# Note that alarms much more for small k... too little power  
+# for alpha == .3, got .1 fpr
+
 
 
 cat("\n~ R ~\n")
@@ -79,7 +87,7 @@ i <- 2
 nfp <- 0 # number of false positives
 count <- 1
 while (count < nsim) {
-    print(count)
+    # print(count)
     count <- count + 1
     if(! test_MHA_fpr(rnorm(N), alpha, nu, i)) {
         nfp <- nfp + 1

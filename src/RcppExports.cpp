@@ -121,6 +121,71 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// test_GHA_constr2
+void test_GHA_constr2(std::deque<double>& v, double const& thresh);
+RcppExport SEXP _Dlm_test_GHA_constr2(SEXP vSEXP, SEXP threshSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::deque<double>& >::type v(vSEXP);
+    Rcpp::traits::input_parameter< double const& >::type thresh(threshSEXP);
+    test_GHA_constr2(v, thresh);
+    return R_NilValue;
+END_RCPP
+}
+// EvalStatL2
+double EvalStatL2(NumericMatrix& S, int s, int t);
+RcppExport SEXP _Dlm_EvalStatL2(SEXP SSEXP, SEXP sSEXP, SEXP tSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix& >::type S(SSEXP);
+    Rcpp::traits::input_parameter< int >::type s(sSEXP);
+    Rcpp::traits::input_parameter< int >::type t(tSEXP);
+    rcpp_result_gen = Rcpp::wrap(EvalStatL2(S, s, t));
+    return rcpp_result_gen;
+END_RCPP
+}
+// OneStepSearch
+List OneStepSearch(NumericMatrix& S, int shift, String method);
+RcppExport SEXP _Dlm_OneStepSearch(SEXP SSEXP, SEXP shiftSEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix& >::type S(SSEXP);
+    Rcpp::traits::input_parameter< int >::type shift(shiftSEXP);
+    Rcpp::traits::input_parameter< String >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(OneStepSearch(S, shift, method));
+    return rcpp_result_gen;
+END_RCPP
+}
+// NaiveOS
+List NaiveOS(NumericMatrix& S, int shift, int l, int s, int r, double stat_s);
+RcppExport SEXP _Dlm_NaiveOS(SEXP SSEXP, SEXP shiftSEXP, SEXP lSEXP, SEXP sSEXP, SEXP rSEXP, SEXP stat_sSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix& >::type S(SSEXP);
+    Rcpp::traits::input_parameter< int >::type shift(shiftSEXP);
+    Rcpp::traits::input_parameter< int >::type l(lSEXP);
+    Rcpp::traits::input_parameter< int >::type s(sSEXP);
+    Rcpp::traits::input_parameter< int >::type r(rSEXP);
+    Rcpp::traits::input_parameter< double >::type stat_s(stat_sSEXP);
+    rcpp_result_gen = Rcpp::wrap(NaiveOS(S, shift, l, s, r, stat_s));
+    return rcpp_result_gen;
+END_RCPP
+}
+// AdvancedOS
+List AdvancedOS(NumericMatrix& S, int shift);
+RcppExport SEXP _Dlm_AdvancedOS(SEXP SSEXP, SEXP shiftSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix& >::type S(SSEXP);
+    Rcpp::traits::input_parameter< int >::type shift(shiftSEXP);
+    rcpp_result_gen = Rcpp::wrap(AdvancedOS(S, shift));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Dlm_isZero", (DL_FUNC) &_Dlm_isZero, 1},
@@ -132,6 +197,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Dlm_test_OHA_constr2", (DL_FUNC) &_Dlm_test_OHA_constr2, 3},
     {"_Dlm_test_MHA_constr2", (DL_FUNC) &_Dlm_test_MHA_constr2, 4},
     {"_Dlm_test_MHA_fpr", (DL_FUNC) &_Dlm_test_MHA_fpr, 4},
+    {"_Dlm_test_GHA_constr2", (DL_FUNC) &_Dlm_test_GHA_constr2, 2},
+    {"_Dlm_EvalStatL2", (DL_FUNC) &_Dlm_EvalStatL2, 3},
+    {"_Dlm_OneStepSearch", (DL_FUNC) &_Dlm_OneStepSearch, 3},
+    {"_Dlm_NaiveOS", (DL_FUNC) &_Dlm_NaiveOS, 6},
+    {"_Dlm_AdvancedOS", (DL_FUNC) &_Dlm_AdvancedOS, 2},
     {NULL, NULL, 0}
 };
 

@@ -1,5 +1,5 @@
 #just dlm. works, don't touch ####
-if(T) {
+if(F) {
     # Objective of script:
     #   - replicate figure 6.2 made in 
     #     FOCuS-master/simulations/pre-change-unknown/detection_rate.R
@@ -171,7 +171,7 @@ if(T) {
     suppressMessages(ggsave(detection_delay, file = 'results/detection_rate.png'))
 }
 # oha ####
-if(F) {
+if(T) {
     source('helper_functions.r')
     
     
@@ -315,8 +315,6 @@ if(F) {
     
     detection_delay <-
         ggplot(
-            #grouped ,
-            #grouped %>% filter(!(algo %in% c("FOCuS-t", "FOCuS0 1000"))),
             grouped %>% filter(!(algo %in% c("FOCuS-t"))),
             aes(
                 x = magnitude,
@@ -332,7 +330,7 @@ if(F) {
         ylab("Detection Delay") +
         scale_y_log10() +
         scale_x_log10() +
-        theme_idris() #+ theme(legend.position = "none")
+        theme_idris() 
     plot(detection_delay)
     
     # ↓ suppress message: Saving 14.5 x 9.21 in image

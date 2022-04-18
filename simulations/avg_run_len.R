@@ -1,5 +1,3 @@
-
-
 source('helper_functions.r')
 
 N <- 2e5 # hopefully only thing that needs to be touched
