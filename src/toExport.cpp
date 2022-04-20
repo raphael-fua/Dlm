@@ -66,22 +66,3 @@ void compare_OHAvMHA1(std::deque<double> &data, double const& alpha, double cons
     Rcpp::Rcout << "------------------------------" << std::endl;
     mha.print();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
