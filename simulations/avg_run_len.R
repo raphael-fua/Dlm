@@ -12,7 +12,7 @@ if(! isWhole(CORES_2)) {
 	stop('sqrt(CORES_1) must be an integer')
 }
 
-REP <- CORES_1
+REP <- 25*CORES_1
 targ_runLen <- N/2
 
 #### functions ####
@@ -38,7 +38,7 @@ dlm_run <- mclapply(X = l_noise,
 )
 cat('dlm_run done. '); print(Sys.time() - t0)
 
-thre_seq <- seq(1, 10, by = .05)
+thre_seq <- seq(1, 10, by = .01)
 avg_run_len <- rep(NA, length(thre_seq))
 
 t0 <- Sys.time()
@@ -71,6 +71,13 @@ save(list = c('N','targ_runLen', 'avg_run_len', 'thre'),
 mat <- cbind(thre_seq, avg_run_len)
 colnames(mat) <- c('threshold', 'avg_run_len')
 
+plot(
+    x = mat,
+    type = 'l',
+    main = paste('N:', N, '| Target run length:', targ_runLen, '| REP:', REP)
+)
+abline(v = thre)
+text(thre, 1, paste0('DLM threshold: ', thre))
 
 png('results/threshold.png')
 plot(
@@ -79,6 +86,6 @@ plot(
     main = paste('N:', N, '| Target run length:', targ_runLen, '| REP:', REP)
 )
 abline(v = thre)
-text(thre, 1, thre)
+text(thre, 1, paste0('DLM threshold: ', thre))
 invisible(dev.off())
 
