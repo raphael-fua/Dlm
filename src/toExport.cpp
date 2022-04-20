@@ -66,3 +66,26 @@ void compare_OHAvMHA1(std::deque<double> &data, double const& alpha, double cons
     Rcpp::Rcout << "------------------------------" << std::endl;
     mha.print();
 }
+
+void test_GDLM_constr(const int &q, std::deque<double> &v, double const& thresh) {
+    GDLM gdlm(v, thresh);
+    gdlm.print();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

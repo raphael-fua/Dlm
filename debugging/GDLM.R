@@ -11,23 +11,7 @@ thresh <- 10
 test_GHA_constr2(v, 1)
 cat('------------------------------\n')
 set.seed(7)
-d <- rnorm(100)
-test_GHA_constr2(d, 1)
+d <- rnorm(2^7)
+test_GDLM_constr(q = 4,  v = d, thresh = 5)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    

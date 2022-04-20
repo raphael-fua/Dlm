@@ -13,7 +13,7 @@ public:
     Cpd(std::string const& stat_name,
         std::deque<size_t> const& idx,
         std::deque<double> const& sums,
-        double const& thresh,
+
         int const& t,
         int const& cp
     );

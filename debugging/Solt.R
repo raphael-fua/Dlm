@@ -55,22 +55,6 @@ for(time in 9:2^p_max) {
 sink()
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # plotting ####
 if(F) {
 

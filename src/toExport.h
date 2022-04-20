@@ -40,8 +40,8 @@ int runtimeGHA(std::deque<double> &v, double const& thresh);
 // [[Rcpp::export]]
 void compare_OHAvMHA1(std::deque<double> &data, double const& alpha, double const& nu);
 
-
-
+// [[Rcpp::export]]
+void test_GDLM_constr(int const& q, std::deque<double> &v, double const& thresh);
 
 
 
