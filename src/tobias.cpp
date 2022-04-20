@@ -177,6 +177,33 @@ int runtimeAOS(Rcpp::NumericMatrix &S, double const& thresh) {
     return t;
 }
 
+std::vector<double> scoresAOS(Rcpp::NumericMatrix &S) {
+    std::vector<double> maxs = {0.0};
+    int t = -1;
+    int i = 4; // cannot call OneStepSearch if SS has too few columns
+    while(i < S.ncol()) {
+        NumericMatrix SS = S(Range(0, 0), Range(0, i));
+        List L = OneStepSearch(SS, 0, "combined");
+        double s = L["stat"];
+        maxs.push_back(s);
+        ++i;
+    }
+    return maxs;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

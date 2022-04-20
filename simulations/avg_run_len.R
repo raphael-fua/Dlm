@@ -1,6 +1,6 @@
 source('helper_functions.r')
 
-N <- 2e5 # hopefully only thing that needs to be touched
+N <- 2e6 # hopefully only thing that needs to be touched
 
 SEED <- 45
 RNGkind("L'Ecuyer-CMRG")
@@ -38,7 +38,7 @@ dlm_run <- mclapply(X = l_noise,
 )
 cat('dlm_run done. '); print(Sys.time() - t0)
 
-thre_seq <- seq(1, 10, by = .01)
+thre_seq <- seq(4.8, 6, by = .01)
 avg_run_len <- rep(NA, length(thre_seq))
 
 t0 <- Sys.time()

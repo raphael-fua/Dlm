@@ -38,6 +38,9 @@ int runtimeMHA(std::deque<double> &data, double const& alpha, double const& nu, 
 int runtimeGHA(std::deque<double> &v, double const& thresh);
 
 // [[Rcpp::export]]
+std::deque<double> scoresGHA(std::deque<double> &v);
+
+// [[Rcpp::export]]
 void compare_OHAvMHA1(std::deque<double> &data, double const& alpha, double const& nu);
 
 

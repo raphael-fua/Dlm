@@ -45,6 +45,10 @@ runtimeGHA <- function(v, thresh) {
     .Call(`_Dlm_runtimeGHA`, v, thresh)
 }
 
+scoresGHA <- function(v) {
+    .Call(`_Dlm_scoresGHA`, v)
+}
+
 compare_OHAvMHA1 <- function(data, alpha, nu) {
     invisible(.Call(`_Dlm_compare_OHAvMHA1`, data, alpha, nu))
 }
@@ -67,5 +71,9 @@ AdvancedOS <- function(S, shift) {
 
 runtimeAOS <- function(S, thresh) {
     .Call(`_Dlm_runtimeAOS`, S, thresh)
+}
+
+scoresAOS <- function(S) {
+    .Call(`_Dlm_scoresAOS`, S)
 }
 

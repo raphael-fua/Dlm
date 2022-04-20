@@ -57,6 +57,19 @@ int runtimeGHA(std::deque<double> &v, double const& thresh) {
     return gha.t;
 }
 
+std::deque<double> scoresGHA(std::deque<double> &v) {
+    std::deque<double> maxs = {0.0};
+    std::deque<double> tmp = {v[0]};
+    GHA gha(tmp, INFINITY);
+    maxs.push_back(gha.Z);
+    for(int i = 1; i < v.size(); ++i) {
+        gha.update(v[i]);
+        maxs.push_back(gha.Z);
+    }
+    return maxs;
+}
+
+
 
 void compare_OHAvMHA1(std::deque<double> &data, double const& alpha, double const& nu) {
     OHA oha(data, alpha, nu);

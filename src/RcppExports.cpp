@@ -146,6 +146,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// scoresGHA
+std::deque<double> scoresGHA(std::deque<double>& v);
+RcppExport SEXP _Dlm_scoresGHA(SEXP vSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::deque<double>& >::type v(vSEXP);
+    rcpp_result_gen = Rcpp::wrap(scoresGHA(v));
+    return rcpp_result_gen;
+END_RCPP
+}
 // compare_OHAvMHA1
 void compare_OHAvMHA1(std::deque<double>& data, double const& alpha, double const& nu);
 RcppExport SEXP _Dlm_compare_OHAvMHA1(SEXP dataSEXP, SEXP alphaSEXP, SEXP nuSEXP) {
@@ -224,6 +235,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// scoresAOS
+std::vector<double> scoresAOS(Rcpp::NumericMatrix& S);
+RcppExport SEXP _Dlm_scoresAOS(SEXP SSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type S(SSEXP);
+    rcpp_result_gen = Rcpp::wrap(scoresAOS(S));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Dlm_isZero", (DL_FUNC) &_Dlm_isZero, 1},
@@ -237,12 +259,14 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Dlm_test_GHA_constr2", (DL_FUNC) &_Dlm_test_GHA_constr2, 2},
     {"_Dlm_runtimeMHA", (DL_FUNC) &_Dlm_runtimeMHA, 4},
     {"_Dlm_runtimeGHA", (DL_FUNC) &_Dlm_runtimeGHA, 2},
+    {"_Dlm_scoresGHA", (DL_FUNC) &_Dlm_scoresGHA, 1},
     {"_Dlm_compare_OHAvMHA1", (DL_FUNC) &_Dlm_compare_OHAvMHA1, 3},
     {"_Dlm_EvalStatL2", (DL_FUNC) &_Dlm_EvalStatL2, 3},
     {"_Dlm_OneStepSearch", (DL_FUNC) &_Dlm_OneStepSearch, 3},
     {"_Dlm_NaiveOS", (DL_FUNC) &_Dlm_NaiveOS, 6},
     {"_Dlm_AdvancedOS", (DL_FUNC) &_Dlm_AdvancedOS, 2},
     {"_Dlm_runtimeAOS", (DL_FUNC) &_Dlm_runtimeAOS, 2},
+    {"_Dlm_scoresAOS", (DL_FUNC) &_Dlm_scoresAOS, 1},
     {NULL, NULL, 0}
 };
 

@@ -212,7 +212,7 @@ main()
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Set up ####
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-N <- 2e5 
+N <- 2e6 
 SEED <- 45
 RNGkind("L'Ecuyer-CMRG")
 set.seed(SEED)
@@ -252,7 +252,7 @@ GDLM_run <- mclapply(X = l_noise,
 )
 cat('GDLM_run done. '); print(Sys.time() - t0)
 
-thre_seq <- seq(2, 6, by = .01)
+thre_seq <- seq(4.5, 6.5, by = .05)
 avg_run_len <- rep(NA, length(thre_seq))
 
 t0 <- Sys.time()

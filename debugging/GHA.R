@@ -1,5 +1,5 @@
 cat('\14')
-if(F) {rebuild()}
+if(T) {rebuild()}
 
 library(Dlm)
 cat("\n~~~ out of danger zone ~~~\n")
@@ -13,6 +13,8 @@ cat('------------------------------\n')
 set.seed(7)
 d <- rnorm(100)
 test_GHA_constr2(d, 1)
+
+scoresGHA(d)
 
 
 
