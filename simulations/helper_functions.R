@@ -1,3 +1,4 @@
+library(FOCuS)
 library(Dlm)
 library(tidyverse)
 library(parallel)
