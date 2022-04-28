@@ -1,12 +1,18 @@
 t0 <- Sys.time()
 source('helper_functions.r')
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Set up ####
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-CORES_1 <- 3
+# Modifiable by user ####
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 N <- 2e5
-NREP <- 5 # number of simulation runs
+NREP <- 5
+CORES <- 1
 
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# Automatic setup ####
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 realCP <- N / 20
 pows <- seq(5, 0, length.out = 10)
 customDelta <- c(- .5 ^ pows, .5 ^ pows) %>% sort 
@@ -17,6 +23,16 @@ sim_grid <-
         changepoint = realCP,
         delta = customDelta
     )
+
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# Thresholds for N = 2e5 ####
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+mult <- 1.2
+threshGHA <- 6.58 * mult
+threshAOS <- 4.89 * mult
+threshDLM <- 4.84 * mult
+treshGDLM <- 4.90 * mult
+#threshFOCuS <- 12.35 # for some reason, only accepts if 12.35 given to focus
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Auxiliary function ####
@@ -67,60 +83,60 @@ runtimeGDLM_allocate <- function(q, d, th) {
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # i is for MHA
 # q is for GDLM
-run_simulation <- function(p, REPS, noise, alpha, nu, i, q, treshAOS, treshDLM, threshGDLM, threshGHA){
+run_simulation <- function(p, REPS, noise, alpha, nu, i1, i2, q, treshAOS, treshDLM, threshGDLM, threshGHA, threshFOCuS){
     cat('\n'); print(p)
-    data <- mclapply(X = noise, FUN = function (eps) { c(rep(0, p$changepoint), rep(p$delta, p$N - p$changepoint)) + eps }, mc.cores = CORES_1)
+    data <- mclapply(X = noise, FUN = function (eps) { c(rep(0, p$changepoint), rep(p$delta, p$N - p$changepoint)) + eps }, mc.cores = CORES)
+    
+    print("FOCuS")
+    res <- mclapply(X = data, FUN = function(d) { FOCuS(d, 12.35 * mult, grid = NA, K = Inf) }, mc.cores = CORES)
+    cp <- sapply(res, function (r) r$t)
+    output <- data.frame(sim = 1:REPS, magnitude = p$delta, algo = "FOCuS", est = cp, real = p$changepoint, N = p$N)
     
     print("DLM")
-    cp <- unlist(mclapply(X = data, FUN = runtime, stat_name = "cusum", thresh = treshDLM, mc.cores = CORES_1))
-    output <- data.frame(sim = 1:REPS, magnitude = p$delta, algo = "DLM", est = cp, real = p$changepoint, N = p$N)
+    cp <- unlist(mclapply(X = data, FUN = runtime, stat_name = "cusum", thresh = treshDLM, mc.cores = CORES))
+    output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = "DLM", est = cp, real = p$changepoint, N = p$N))
     
-    print("GDLM")
-    cp <- unlist(mclapply(X = data, FUN = runtimeGDLM_allocate, q = q, th = treshGDLM, mc.cores = CORES_1))
-    output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = "GDLM", est = cp, real = p$changepoint, N = p$N))
+    print(paste0("GDLM q: ", q))
+    cp <- unlist(mclapply(X = data, FUN = runtimeGDLM_allocate, q = q, th = treshGDLM, mc.cores = CORES))
+    output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = paste0("GDLM q: ", q), est = cp, real = p$changepoint, N = p$N))
     
     print("AOS")
-    S <- mclapply(X = data , FUN = function(d) { return(matrix(cumsum(c(0,d)), nrow=1)) }, mc.cores = CORES_1)
-    cp <-  unlist(mclapply(X = S,  FUN = runtimeAOS, thresh = treshAOS, mc.cores = CORES_1))
+    S <- mclapply(X = data , FUN = function(d) { return(matrix(cumsum(c(0,d)), nrow=1)) }, mc.cores = CORES)
+    cp <-  unlist(mclapply(X = S,  FUN = runtimeAOS, thresh = treshAOS, mc.cores = CORES))
     output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = "AOS", est = cp, real = p$changepoint, N = p$N))
     
     print("GHA")
-    cp <-  unlist(mclapply(X = data,  FUN = runtimeGHA, thresh = threshGHA, mc.cores = CORES_1))
+    cp <-  unlist(mclapply(X = data,  FUN = runtimeGHA, thresh = threshGHA, mc.cores = CORES))
     output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = "GHA", est = cp, real = p$changepoint, N = p$N))
     
     print("OHA_alpha")
-    cp <-  unlist(mclapply(X = data,  FUN = runtimeOHA, alpha = alpha, nu = nu, mc.cores = CORES_1))
+    cp <-  unlist(mclapply(X = data,  FUN = runtimeOHA, alpha = alpha, nu = nu, mc.cores = CORES))
     output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = "OHA_alpha", est = cp, real = p$changepoint, N = p$N))
     
-    print("MHA_alpha i = 1")
-    cp <-  unlist(mclapply(X = data,  FUN = runtimeMHA, alpha = alpha, nu = nu, i = 1, mc.cores = CORES_1))
+    print("MHA_alpha i: 1")
+    cp <-  unlist(mclapply(X = data,  FUN = runtimeMHA, alpha = alpha, nu = nu, i = 1, mc.cores = CORES))
     output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = "MHA_alpha i = 1", est = cp, real = p$changepoint, N = p$N))
     
-    print(paste("MHA_alpha i =", i))
-    cp <-  unlist(mclapply(X = data,  FUN = runtimeMHA, alpha = alpha, nu = nu, i = i, mc.cores = CORES_1))
-    output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = paste("MHA_alpha i =", i), est = cp, real = p$changepoint, N = p$N)) 
+    print(paste0("MHA_alpha i: ", i1))
+    cp <-  unlist(mclapply(X = data,  FUN = runtimeMHA, alpha = alpha, nu = nu, i = i1, mc.cores = CORES))
+    output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = paste0("MHA_alpha i: ", i1), est = cp, real = p$changepoint, N = p$N)) 
+    
+    print(paste0("MHA_alpha i: ", i2))
+    cp <-  unlist(mclapply(X = data,  FUN = runtimeMHA, alpha = alpha, nu = nu, i = i2, mc.cores = CORES))
+    output <- rbind(output, data.frame(sim = 1:REPS, magnitude = p$delta, algo = paste0("MHA_alpha i: ", i2), est = cp, real = p$changepoint, N = p$N)) 
     
     return(output)
 }
 
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# Calibrated thresholds ####
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-threshGHA <- 6.58 
-threshAOS <- 4.89
-threshDLM <- 4.84
-treshGDLM <- 4.9
-
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Simulation ####
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Data generation ####
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 RNGkind("L'Ecuyer-CMRG")
 set.seed(42)
-noise <- mclapply(1:NREP, function (i) rnorm(N), mc.cores = CORES_1)
+noise <- mclapply(1:NREP, function (i) rnorm(N), mc.cores = CORES)
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Calling run_simulation ####
@@ -130,7 +146,15 @@ outDF <-
         X = seq_len(nrow(sim_grid)), 
         FUN = function (i) {
             p <- sim_grid[i, ]
-            res <- run_simulation(p = p, REPS = NREP, noise = noise, alpha = 0.05, nu = 100, i = 4, q = 4,  treshAOS = threshAOS, treshDLM = threshDLM, threshGDLM = threshGDLM, threshGHA = threshGHA)
+            res <- run_simulation(p = p, 
+                                  REPS = NREP, 
+                                  noise = noise, 
+                                  alpha = 0.05, 
+                                  nu = 100, 
+                                  i1 = 4,
+                                  i2 = 5,
+                                  q = 4,  
+                                  treshAOS = threshAOS, treshDLM = threshDLM, threshGDLM = threshGDLM, threshGHA = threshGHA)
             return(res)
         }
     )
@@ -177,6 +201,7 @@ grouped <-
 options(dplyr.summarise.inform = TRUE)
 
 ### detection delay ####
+
 generate_labels <- function (dataset, var, XFUNC) {
     library(ggrepel)
     dataset <- dataset[which(dataset[, var] == XFUNC(dataset[, var])), ] %>% mutate(label = as.character(algo))
@@ -185,7 +210,7 @@ generate_labels <- function (dataset, var, XFUNC) {
 
 data_label <- generate_labels(grouped, "magnitude", max)
 
-cbPalette <- RColorBrewer::brewer.pal(7, "Paired")[c(1, 2, 3, 4, 5, 6, 7)]
+cbPalette <- RColorBrewer::brewer.pal(9, "Paired")[c(1, 2, 3, 4, 5, 6, 7, 8, 9)]
 #cbPalette <- RColorBrewer::brewer.pal(6, "Paired")[c(2, 1, 3, 4, 5, 6)]
 #cbPalette <- RColorBrewer::brewer.pal(6, "Paired")[c(2, 3, 4, 5, 6)]
 

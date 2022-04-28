@@ -19,6 +19,11 @@ int runtime(std::string stat_name, std::deque<double> data, double thresh);
 // [[Rcpp::export]]
 int runtimeOHA(std::deque<double> &data, double const& alpha, double const& nu);
 
+// [[Rcpp::export]]
+std::deque<size_t> GetLastIndex(int n);
+
+// [[Rcpp::export]]
+void printIndex(int n);
 
 void test_OHA_constr2 (std::deque<double> &v, double const& alpha, double const& nu);
 

@@ -82,6 +82,27 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// GetLastIndex
+std::deque<size_t> GetLastIndex(int n);
+RcppExport SEXP _Dlm_GetLastIndex(SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(GetLastIndex(n));
+    return rcpp_result_gen;
+END_RCPP
+}
+// printIndex
+void printIndex(int n);
+RcppExport SEXP _Dlm_printIndex(SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    printIndex(n);
+    return R_NilValue;
+END_RCPP
+}
 // test_MHA_constr2
 void test_MHA_constr2(std::deque<double>& v, double const& alpha, double const& nu, int const& i);
 RcppExport SEXP _Dlm_test_MHA_constr2(SEXP vSEXP, SEXP alphaSEXP, SEXP nuSEXP, SEXP iSEXP) {
@@ -254,6 +275,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Dlm_scores", (DL_FUNC) &_Dlm_scores, 3},
     {"_Dlm_runtime", (DL_FUNC) &_Dlm_runtime, 3},
     {"_Dlm_runtimeOHA", (DL_FUNC) &_Dlm_runtimeOHA, 3},
+    {"_Dlm_GetLastIndex", (DL_FUNC) &_Dlm_GetLastIndex, 1},
+    {"_Dlm_printIndex", (DL_FUNC) &_Dlm_printIndex, 1},
     {"_Dlm_test_MHA_constr2", (DL_FUNC) &_Dlm_test_MHA_constr2, 4},
     {"_Dlm_test_MHA_fpr", (DL_FUNC) &_Dlm_test_MHA_fpr, 4},
     {"_Dlm_test_GHA_constr2", (DL_FUNC) &_Dlm_test_GHA_constr2, 2},

@@ -25,6 +25,14 @@ runtimeOHA <- function(data, alpha, nu) {
     .Call(`_Dlm_runtimeOHA`, data, alpha, nu)
 }
 
+GetLastIndex <- function(n) {
+    .Call(`_Dlm_GetLastIndex`, n)
+}
+
+printIndex <- function(n) {
+    invisible(.Call(`_Dlm_printIndex`, n))
+}
+
 test_MHA_constr2 <- function(v, alpha, nu, i) {
     invisible(.Call(`_Dlm_test_MHA_constr2`, v, alpha, nu, i))
 }

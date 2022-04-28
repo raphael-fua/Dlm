@@ -15,6 +15,7 @@ public:
     );
 
     void print() const;
+    
     size_t peaks() const;
     virtual void update(double const& new_data) override;
 };

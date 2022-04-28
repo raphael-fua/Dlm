@@ -1,5 +1,30 @@
 #include "toExport.h"
 
+
+
+std::deque<size_t> GetLastIndex(int n) {
+    std::deque<double> v(n, 0);
+    Dlm dlm("cusum", v, INFINITY);
+    return dlm.idx;
+}
+
+
+void printIndex(int n) {
+    Dlm dlm({5, 6}, 7);
+    for(auto e:dlm.idx) {
+        std::cout << e << " ";
+    }
+    std::cout << std::endl;
+    for(int i = 0; i < n; ++i) {
+        dlm.update(0);
+        for(auto e:dlm.idx) {
+            std::cout << e << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+
 double time_dlm(std::deque<double> data){
     Rcpp::Rcout << "emy coeur" << std::endl;
     auto start = std::chrono::high_resolution_clock::now();
